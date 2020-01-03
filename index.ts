@@ -4,7 +4,6 @@ import Store from 'data-store';
 import clear from 'clear';
 // import clui from 'clui';
 import axios, {AxiosRequestConfig} from 'axios';
-import { keysIn } from 'ramda';
 // Enquirer doesn't support import syntax
 // eslint-disable-next-line
 const {Input, Select} = require('enquirer');
@@ -173,7 +172,7 @@ async function updateCredentialsMenu(
   const questions = {
     type: 'select',
     name: 'action',
-    message: 'Update Credentials',
+    message: 'Update Credentials: ',
     choices
   };
 
@@ -226,7 +225,6 @@ async function configMenu(services: InitializedServicesType): Promise<void> {
 
   const prompt = new Select(questions);
 
-
   prompt.on('keypress', rawKey => {
     const foc = prompt.state.choices.find(
       c => c.shortcut && c.shortcut === rawKey
@@ -272,7 +270,18 @@ async function basicMenu(services: InitializedServicesType): Promise<void> {
     type: 'select',
     name: 'action',
     message: 'What do you want to do?',
-    choices
+    // The `shortcut` and `actions` here are added to prevent the bell alerts
+    // that Enquirer emits. It's a hacky workaround and it might be worth
+    // creating a PR or fork of Enquirer to provide more elegant shortcut
+    // behaviours.
+    shortcut: () => undefined,
+    actions: {
+      shift: {
+        c: 'shortcut',
+        q: 'shortcut',
+      }
+    },
+    choices,
   };
 
   const prompt = new Select(questions);
