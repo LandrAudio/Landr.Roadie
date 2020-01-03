@@ -23,6 +23,8 @@
     "@typescript-eslint/eslint-plugin": "^2.7.0",
     "@typescript-eslint/parser": "^2.7.0",
     "axios": "^0.19.0",
+    "clear": "^0.1.0",
+    "clui": "^0.3.6",
     "data-store": "^4.0.3",
     "enquirer": "^2.3.2",
     "eslint": "^6.6.0",

@@ -1,10 +1,13 @@
 import kleur from 'kleur';
 import keytar from 'keytar';
 import Store from 'data-store';
+import clear from 'clear';
+// import clui from 'clui';
 import axios, {AxiosRequestConfig} from 'axios';
+import { keysIn } from 'ramda';
 // Enquirer doesn't support import syntax
 // eslint-disable-next-line
-const {Input} = require('enquirer');
+const {Input, Select} = require('enquirer');
 
 const ACCOUNT_PASSWORD = 'landr-account-password';
 const ACCOUNT_NAME = 'landr-account-name';
@@ -147,10 +150,159 @@ async function promptForApiKey(
   return String(key).trim();
 }
 
-function startWork(services: InitializedServicesType): void {
-  console.log('meow');
-  console.log(services);
-  return;
+async function updateCredentialsMenu(
+  services: InitializedServicesType
+): Promise<void> {
+  clear();
+  const servicesChoices = Object.keys(services).map((key: string) => {
+    return {
+      message: `Update ${key}`,
+      name: 'key'
+    };
+  });
+
+  const choices = [
+    ...servicesChoices,
+    {
+      message: `Go [B]ack`,
+      name: 'back',
+      shortcut: 'B'
+    }
+  ];
+
+  const questions = {
+    type: 'select',
+    name: 'action',
+    message: 'Update Credentials',
+    choices
+  };
+
+  const prompt = new Select(questions);
+
+  prompt.on('keypress', rawKey => {
+    const foc = prompt.state.choices.find(
+      c => c.shortcut && c.shortcut === rawKey
+    );
+
+    if (foc) {
+      prompt.state.index = foc.index;
+      prompt.submit();
+    }
+  });
+
+  const answers = await prompt.run();
+
+  clear();
+
+  switch (answers) {
+    case 'back':
+      await configMenu(services);
+    default:
+      break;
+  }
+}
+
+async function configMenu(services: InitializedServicesType): Promise<void> {
+  clear();
+  const choices = [
+    {
+      message: `[U]pdate credentials`,
+      name: 'credentials',
+      shortcut: 'U'
+    },
+    {
+      message: `Go [B]ack`,
+      name: 'back',
+      shortcut: 'B'
+    }
+  ];
+
+  const questions = {
+    type: 'select',
+    name: 'action',
+    message: 'Config:',
+    choices
+  };
+
+  const prompt = new Select(questions);
+
+
+  prompt.on('keypress', rawKey => {
+    const foc = prompt.state.choices.find(
+      c => c.shortcut && c.shortcut === rawKey
+    );
+
+    if (foc) {
+      prompt.state.index = foc.index;
+      prompt.submit();
+    }
+  });
+
+  const answers = await prompt.run();
+
+  clear();
+
+  switch (answers) {
+    case 'credentials':
+      await updateCredentialsMenu(services);
+      break;
+    case 'back':
+      await basicMenu(services);
+      return;
+    default:
+      break;
+  }
+}
+
+async function basicMenu(services: InitializedServicesType): Promise<void> {
+  const choices = [
+    {
+      message: '[C]onfig',
+      name: 'config',
+      shortcut: 'C'
+    },
+    {
+      message: '[Q]uit',
+      name: 'quit',
+      shortcut: 'Q'
+    }
+  ];
+
+  const questions = {
+    type: 'select',
+    name: 'action',
+    message: 'What do you want to do?',
+    choices
+  };
+
+  const prompt = new Select(questions);
+
+  prompt.on('keypress', rawKey => {
+    const foc = prompt.state.choices.find(
+      c => c.shortcut && c.shortcut === rawKey
+    );
+
+    if (foc) {
+      prompt.state.index = foc.index;
+      prompt.submit();
+    }
+  });
+
+  const answers = await prompt.run();
+
+  switch (answers) {
+    case 'config':
+      configMenu(services);
+      break;
+    case 'quit':
+      return;
+    default:
+      break;
+  }
+}
+
+async function startWork(services: InitializedServicesType): Promise<void> {
+  await basicMenu(services);
 }
 
 async function testServiceCredentials(
@@ -209,6 +361,8 @@ async function getValidCredentials(
 }
 
 async function initializeServices(): Promise<InitializedServicesType> {
+  console.log(kleur.blue().italic('Checking for API credentials...'));
+
   let initializedServices = {};
   let allCredentials = getEmptyCredentials();
 
@@ -253,20 +407,24 @@ async function initializeServices(): Promise<InitializedServicesType> {
       ...initializedServices,
       [serviceName]: initializedService
     };
+
+    console.log(`${serviceName}: ${kleur.green('Okay!')}`);
   }
 
-  console.log('All keys are valid!');
+  console.log();
+  console.log(kleur.green('All API credentials are valid!'));
+  console.log();
 
   return initializedServices as InitializedServicesType;
 }
 
 async function init(): Promise<void> {
+  clear();
   // SETUP FLOW // CHECK FOR API KEYS WITH KEYTAR
-  console.log(kleur.blue().italic('Checking for API keys...'));
-
   const initializedServices = await initializeServices().then(x => x);
 
-  startWork(initializedServices);
+  await startWork(initializedServices);
+  console.log('Exiting...');
 }
 
 init();
