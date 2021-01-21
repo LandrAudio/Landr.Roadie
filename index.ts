@@ -13,7 +13,7 @@ const ACCOUNT_NAME = 'landr-account-name';
 
 enum ServiceNames {
   Octopus = 'Octopus',
-  Jira = 'Jira'
+  Jira = 'Jira',
 }
 
 type Credentials = {
@@ -29,12 +29,12 @@ function getEmptyCredentials(): AllCredentials {
   return {
     Octopus: {
       username: '',
-      apiKey: ''
+      apiKey: '',
     },
     Jira: {
       username: '',
-      apiKey: ''
-    }
+      apiKey: '',
+    },
   };
 }
 
@@ -51,8 +51,8 @@ abstract class API {
       baseURL: this.baseUrl,
       auth: {
         username: credentials.username,
-        password: credentials.apiKey
-      }
+        password: credentials.apiKey,
+      },
     };
   }
   static async testCredentials(credentials: Credentials): Promise<void> {
@@ -78,8 +78,8 @@ class OctopusAPI extends API {
     return {
       baseURL: this.baseUrl,
       headers: {
-        'X-Octopus-ApiKey': credentials.apiKey
-      }
+        'X-Octopus-ApiKey': credentials.apiKey,
+      },
     };
   }
   constructor(credentials: Credentials) {
@@ -103,7 +103,7 @@ class JiraAPI extends API {
 
 const services = {
   [ServiceNames.Octopus]: OctopusAPI,
-  [ServiceNames.Jira]: JiraAPI
+  [ServiceNames.Jira]: JiraAPI,
 };
 
 type InitializedServicesType = {
@@ -121,8 +121,8 @@ async function promptForUsername(
     initial: allCredentials[serviceName].username,
     history: {
       store: new Store({path: `${__dirname}/username.json`}),
-      autosave: true
-    }
+      autosave: true,
+    },
   });
 
   const key = await prompt.run();
@@ -141,7 +141,7 @@ async function promptForApiKey(
   const prompt = new Input({
     name: 'apiKey',
     message: `${serviceName} API Key:`,
-    initial: allCredentials[serviceName].apiKey
+    initial: allCredentials[serviceName].apiKey,
   });
 
   const key = await prompt.run();
@@ -156,7 +156,7 @@ async function updateCredentialsMenu(
   const servicesChoices = Object.keys(services).map((key: string) => {
     return {
       message: `Update ${key}`,
-      name: 'key'
+      name: 'key',
     };
   });
 
@@ -165,22 +165,22 @@ async function updateCredentialsMenu(
     {
       message: `Go [B]ack`,
       name: 'back',
-      shortcut: 'B'
-    }
+      shortcut: 'B',
+    },
   ];
 
   const questions = {
     type: 'select',
     name: 'action',
     message: 'Update Credentials: ',
-    choices
+    choices,
   };
 
   const prompt = new Select(questions);
 
-  prompt.on('keypress', rawKey => {
+  prompt.on('keypress', (rawKey) => {
     const foc = prompt.state.choices.find(
-      c => c.shortcut && c.shortcut === rawKey
+      (c) => c.shortcut && c.shortcut === rawKey
     );
 
     if (foc) {
@@ -207,27 +207,27 @@ async function configMenu(services: InitializedServicesType): Promise<void> {
     {
       message: `[U]pdate credentials`,
       name: 'credentials',
-      shortcut: 'U'
+      shortcut: 'U',
     },
     {
       message: `Go [B]ack`,
       name: 'back',
-      shortcut: 'B'
-    }
+      shortcut: 'B',
+    },
   ];
 
   const questions = {
     type: 'select',
     name: 'action',
     message: 'Config:',
-    choices
+    choices,
   };
 
   const prompt = new Select(questions);
 
-  prompt.on('keypress', rawKey => {
+  prompt.on('keypress', (rawKey) => {
     const foc = prompt.state.choices.find(
-      c => c.shortcut && c.shortcut === rawKey
+      (c) => c.shortcut && c.shortcut === rawKey
     );
 
     if (foc) {
@@ -257,13 +257,13 @@ async function basicMenu(services: InitializedServicesType): Promise<void> {
     {
       message: '[C]onfig',
       name: 'config',
-      shortcut: 'C'
+      shortcut: 'C',
     },
     {
       message: '[Q]uit',
       name: 'quit',
-      shortcut: 'Q'
-    }
+      shortcut: 'Q',
+    },
   ];
 
   const questions = {
@@ -279,16 +279,16 @@ async function basicMenu(services: InitializedServicesType): Promise<void> {
       shift: {
         c: 'shortcut',
         q: 'shortcut',
-      }
+      },
     },
     choices,
   };
 
   const prompt = new Select(questions);
 
-  prompt.on('keypress', rawKey => {
+  prompt.on('keypress', (rawKey) => {
     const foc = prompt.state.choices.find(
-      c => c.shortcut && c.shortcut === rawKey
+      (c) => c.shortcut && c.shortcut === rawKey
     );
 
     if (foc) {
@@ -348,7 +348,7 @@ async function retryForValidKey(
 
   return retryForValidKey(serviceName, {
     ...allCredentials,
-    [serviceName]: {username, apiKey}
+    [serviceName]: {username, apiKey},
   });
 }
 
@@ -381,7 +381,7 @@ async function initializeServices(): Promise<InitializedServicesType> {
 
     allCredentials = {
       ...allCredentials,
-      [serviceName]: {username, apiKey}
+      [serviceName]: {username, apiKey},
     };
 
     const validatedCredentials = await getValidCredentials(
@@ -407,14 +407,14 @@ async function initializeServices(): Promise<InitializedServicesType> {
 
     allCredentials = {
       ...allCredentials,
-      [serviceName]: validatedCredentials
+      [serviceName]: validatedCredentials,
     };
 
     const initializedService = new services[serviceName](validatedCredentials);
 
     initializedServices = {
       ...initializedServices,
-      [serviceName]: initializedService
+      [serviceName]: initializedService,
     };
 
     console.log(`${serviceName}: ${kleur.green('Okay!')}`);
@@ -430,7 +430,7 @@ async function initializeServices(): Promise<InitializedServicesType> {
 async function init(): Promise<void> {
   clear();
   // SETUP FLOW // CHECK FOR API KEYS WITH KEYTAR
-  const initializedServices = await initializeServices().then(x => x);
+  const initializedServices = await initializeServices().then((x) => x);
 
   await startWork(initializedServices);
   console.log('Exiting...');
