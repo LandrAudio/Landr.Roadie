@@ -39,8 +39,7 @@ export abstract class API {
   }
 }
 
-export type InitializedApisType = Record<ApiNames>{
-
+export type InitializedApisType = {
   [ApiNames.Octopus]: OctopusAPI;
   [ApiNames.Jira]: JiraAPI;
 };
