@@ -1,11 +1,11 @@
-import {InitializedServicesType} from 'types';
+import {InitializedApisType} from 'types';
 import configMenu from './configMenu';
 // Enquirer doesn't support import syntax
 // eslint-disable-next-line
 const {Select} = require('enquirer');
 
 export default async function homeMenu(
-  services: InitializedServicesType
+  services: InitializedApisType
 ): Promise<void> {
   const choices = [
     {

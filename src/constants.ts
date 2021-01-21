@@ -1,11 +1,14 @@
-export enum ServiceNames {
+import JiraAPI from "apis/JiraApi";
+import OctopusAPI from "apis/OctopusApi";
+
+export enum ApiNames {
   Octopus = 'Octopus',
   Jira = 'Jira',
 }
 
-export const services = {
-  [ServiceNames.Octopus]: OctopusAPI,
-  [ServiceNames.Jira]: JiraAPI,
+export const ALL_APIS = {
+  [ApiNames.Octopus]: OctopusAPI,
+  [ApiNames.Jira]: JiraAPI,
 };
 
 export const ACCOUNT_PASSWORD_KEY = 'landr-account-password';

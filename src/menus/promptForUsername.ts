@@ -1,12 +1,12 @@
 import {AllCredentials} from 'types';
 import Store from 'data-store';
-import {ServiceNames} from '../constants';
+import {ApiNames} from '../constants';
 // Enquirer doesn't support import syntax
 // eslint-disable-next-line
 const {Input} = require('enquirer');
 
 export default async function promptForUsername(
-  serviceName: keyof typeof ServiceNames,
+  serviceName: keyof typeof ApiNames,
   allCredentials: AllCredentials
 ): Promise<string> {
   const prompt = new Input({

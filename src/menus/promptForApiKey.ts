@@ -1,15 +1,15 @@
 import kleur from 'kleur';
 import {AllCredentials} from 'types';
-import {ServiceNames, services} from '../constants';
+import {ApiNames, ALL_APIS} from '../constants';
 // Enquirer doesn't support import syntax
 // eslint-disable-next-line
 const {Input} = require('enquirer');
 
 export async function promptForApiKey(
-  serviceName: keyof typeof ServiceNames,
+  serviceName: keyof typeof ApiNames,
   allCredentials: AllCredentials
 ): Promise<string> {
-  const service = services[serviceName];
+  const service = ALL_APIS[serviceName];
 
   console.log(`You can find keys at ${kleur.bold(service.keyPage)}`);
 

@@ -1,4 +1,4 @@
-import { InitializedServicesType } from "types";
+import { InitializedApisType } from "types";
 import clear from 'clear';
 import configMenu from "./configMenu";
 // Enquirer doesn't support import syntax
@@ -6,7 +6,7 @@ import configMenu from "./configMenu";
 const {Select} = require('enquirer');
 
 export default async function updateCredentialsMenu(
-  services: InitializedServicesType,
+  services: InitializedApisType,
 ): Promise<void> {
   clear();
   const servicesChoices = Object.keys(services).map((key: string) => {

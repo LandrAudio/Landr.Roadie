@@ -1,7 +1,7 @@
 import JiraAPI from 'apis/JiraApi';
 import OctopusAPI from 'apis/OctopusApi';
 import {AxiosRequestConfig} from 'axios';
-import {ServiceNames} from './constants';
+import {ApiNames} from './constants';
 
 export type Credentials = {
   readonly username: string;
@@ -9,7 +9,7 @@ export type Credentials = {
 };
 
 export type AllCredentials = {
-  readonly [key in keyof typeof ServiceNames]: Credentials;
+  readonly [key in keyof typeof ApiNames]: Credentials;
 };
 
 export abstract class API {
@@ -39,7 +39,8 @@ export abstract class API {
   }
 }
 
-export type InitializedServicesType = {
-  [ServiceNames.Octopus]: OctopusAPI;
-  [ServiceNames.Jira]: JiraAPI;
+export type InitializedApisType = Record<ApiNames>{
+
+  [ApiNames.Octopus]: OctopusAPI;
+  [ApiNames.Jira]: JiraAPI;
 };

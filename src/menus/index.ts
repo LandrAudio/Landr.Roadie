@@ -1,2 +1,2 @@
-export * from './basicMenu';
+export * from './homeMenu';
 export * from './updateCredentialsMenu';
