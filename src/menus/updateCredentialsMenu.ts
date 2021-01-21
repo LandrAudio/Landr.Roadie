@@ -1,12 +1,12 @@
-import { InitializedApisType } from "types";
+import {InitializedApisType} from 'types';
 import clear from 'clear';
-import configMenu from "./configMenu";
+import configMenu from './configMenu';
 // Enquirer doesn't support import syntax
 // eslint-disable-next-line
 const {Select} = require('enquirer');
 
 export default async function updateCredentialsMenu(
-  services: InitializedApisType,
+  services: InitializedApisType
 ): Promise<void> {
   clear();
   const servicesChoices = Object.keys(services).map((key: string) => {
@@ -52,6 +52,7 @@ export default async function updateCredentialsMenu(
   switch (answers) {
     case 'back':
       await configMenu(services);
+      return;
     default:
       break;
   }

@@ -1,14 +1,11 @@
-import JiraAPI from "apis/JiraApi";
-import OctopusAPI from "apis/OctopusApi";
+import JiraAPI from 'apis/JiraApi';
+import OctopusAPI from 'apis/OctopusApi';
+import {ApisType, ApiNames} from 'types';
 
-export enum ApiNames {
-  Octopus = 'Octopus',
-  Jira = 'Jira',
-}
 
-export const ALL_APIS = {
-  [ApiNames.Octopus]: OctopusAPI,
-  [ApiNames.Jira]: JiraAPI,
+export const APIS: Record<ApiNames, ApisType> = {
+  Octopus: OctopusAPI,
+  Jira: JiraAPI,
 };
 
 export const ACCOUNT_PASSWORD_KEY = 'landr-account-password';

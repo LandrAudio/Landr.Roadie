@@ -2,15 +2,15 @@ import keytar from 'keytar';
 import kleur from 'kleur';
 import {promptForApiKey} from 'menus/promptForApiKey';
 import promptForUsername from 'menus/promptForUsername';
-import {AllCredentials, Credentials, InitializedApisType as InitializedApisType} from 'types';
 import {
-  ACCOUNT_PASSWORD_KEY,
-  ACCOUNT_NAME_KEY,
+  AllCredentialsType,
+  CredentialsType,
+  InitializedApisType,
   ApiNames,
-  ALL_APIS,
-} from '../constants';
+} from 'types';
+import {ACCOUNT_PASSWORD_KEY, ACCOUNT_NAME_KEY, APIS} from '../constants';
 
-function getEmptyCredentials(): AllCredentials {
+function getEmptyCredentials(): AllCredentialsType {
   return {
     Octopus: {
       username: '',
@@ -24,24 +24,24 @@ function getEmptyCredentials(): AllCredentials {
 }
 
 async function testApiCredentials(
-  apiName: keyof typeof ApiNames,
-  credentials: Credentials
+  apiName: ApiNames,
+  credentials: CredentialsType
 ): Promise<boolean> {
   let isValid = true;
   try {
-    await ALL_APIS[apiName].testCredentials(credentials);
+    await new APIS[apiName](credentials).testCredentials();
   } catch (error) {
     isValid = false;
     console.error(`There was an error while checking credentials`);
     console.error(error);
   }
-  return isValid
+  return isValid;
 }
 
 async function retryForValidKey(
-  apiName: keyof typeof ApiNames,
-  allCredentials: AllCredentials
-): Promise<Credentials> {
+  apiName: ApiNames,
+  allCredentials: AllCredentialsType
+): Promise<CredentialsType> {
   console.log(
     `The credentials for ${kleur.blue(apiName)} do not appear to be valid`
   );
@@ -62,9 +62,9 @@ async function retryForValidKey(
 }
 
 async function getValidCredentials(
-  allCredentials: AllCredentials,
-  apiName: keyof typeof ApiNames
-): Promise<Credentials> {
+  allCredentials: AllCredentialsType,
+  apiName: ApiNames
+): Promise<CredentialsType> {
   const credentials = allCredentials[apiName];
   const isValid =
     !credentials.apiKey || !credentials.apiKey
@@ -84,11 +84,8 @@ export default async function initializeApis(): Promise<InitializedApisType> {
   let initializedApis = {};
   let allCredentials = getEmptyCredentials();
 
-  for (const apiName in ApiNames) {
-    const username = await keytar.getPassword(
-      apiName,
-      ACCOUNT_PASSWORD_KEY
-    );
+  for (const apiName in APIS) {
+    const username = await keytar.getPassword(apiName, ACCOUNT_NAME_KEY);
     const apiKey = await keytar.getPassword(apiName, ACCOUNT_PASSWORD_KEY);
 
     allCredentials = {
@@ -98,23 +95,35 @@ export default async function initializeApis(): Promise<InitializedApisType> {
 
     const validatedCredentials = await getValidCredentials(
       allCredentials,
-      apiName as keyof typeof ApiNames
+      apiName as ApiNames
     );
 
     if (validatedCredentials.username !== username) {
-      await keytar.setPassword(
-        apiName,
-        ACCOUNT_NAME_KEY,
-        validatedCredentials.username
-      );
+      console.log(`Saving new username: ${validatedCredentials.username}`);
+      try {
+        await keytar.setPassword(
+          apiName,
+          ACCOUNT_NAME_KEY,
+          validatedCredentials.username
+        );
+      } catch (error) {
+        console.error('There was an error saving you new username: ');
+        console.error(error);
+      }
     }
 
     if (validatedCredentials.apiKey !== apiKey) {
-      await keytar.setPassword(
-        apiName,
-        ACCOUNT_PASSWORD_KEY,
-        validatedCredentials.apiKey
-      );
+      console.log('Saving new password');
+      try {
+        await keytar.setPassword(
+          apiName,
+          ACCOUNT_PASSWORD_KEY,
+          validatedCredentials.apiKey
+        );
+      } catch (error) {
+        console.error('There was an error saving you new password: ');
+        console.error(error);
+      }
     }
 
     allCredentials = {
@@ -122,7 +131,9 @@ export default async function initializeApis(): Promise<InitializedApisType> {
       [apiName]: validatedCredentials,
     };
 
-    const initializedApi = new ALL_APIS[apiName](validatedCredentials);
+    const initializedApi = new APIS[apiName as ApiNames](
+      validatedCredentials
+    );
 
     initializedApis = {
       ...initializedApis,

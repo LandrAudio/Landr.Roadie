@@ -1,24 +1,33 @@
-import axios, {AxiosRequestConfig} from 'axios';
-import {API, Credentials} from 'types';
+import {AxiosRequestConfig} from 'axios';
+import {API, CredentialsType} from 'types';
 
 export default class OctopusAPI extends API {
-  static baseUrl = 'https://octopus.landr.com/';
+  baseUrl = 'https://octopus.landr.com/';
   static keyPage = 'https://octopus.landr.com/app#/users/me/apiKeys';
   public static keyOnlyAuthentication = true;
-  static async testCredentials(credentials: Credentials): Promise<void> {
-    await axios.get('/api/users/me', this.getBaseRequestConfig(credentials));
-  }
-  protected static getBaseRequestConfig(
-    credentials: Credentials
-  ): AxiosRequestConfig {
+
+  get baseRequestConfig(): AxiosRequestConfig {
     return {
       baseURL: this.baseUrl,
       headers: {
-        'X-Octopus-ApiKey': credentials.apiKey,
+        'X-Octopus-ApiKey': this.credentials.apiKey,
       },
     };
   }
-  constructor(credentials: Credentials) {
+
+  testCredentials(): Promise<unknown> {
+    return this.request('/api/users/me', 'get', {
+      headers: {
+        'X-Octopus-ApiKey': this.credentials.apiKey,
+      },
+    });
+  }
+
+  constructor(credentials: CredentialsType) {
     super(credentials);
+  }
+
+  async getProjects(): Promise<string | undefined> {
+    return this.request<string>('meow');
   }
 }

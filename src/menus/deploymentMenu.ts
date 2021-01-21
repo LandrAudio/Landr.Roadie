@@ -1,6 +1,4 @@
 import {InitializedApisType} from 'types';
-import configMenu from './configMenu';
-import deploymentMenu from './deploymentMenu';
 // Enquirer doesn't support import syntax
 // eslint-disable-next-line
 const {Select} = require('enquirer');
@@ -10,21 +8,15 @@ export default async function homeMenu(
 ): Promise<void> {
   const choices = [
     {
-      message: '[C]onfig',
-      name: 'config',
-      shortcut: 'C',
-    },
-    {
-      message: '[D]eploy',
-      name: 'deploy',
-      shortcut: 'D',
-    },
-    {
-      message: '[Q]uit',
-      name: 'quit',
-      shortcut: 'Q',
+      message: `Go [B]ack`,
+      name: 'back',
+      shortcut: 'B',
     },
   ];
+
+  const projects = await services.Octopus.getProjects();
+
+  console.log(projects);
 
   const questions = {
     type: 'select',
@@ -36,10 +28,10 @@ export default async function homeMenu(
     // behaviours.
     shortcut: () => undefined,
     actions: {
-      shift: {
-        c: 'shortcut',
-        q: 'shortcut',
-      },
+      // shift: {
+      //   c: 'shortcut',
+      //   q: 'shortcut',
+      // },
     },
     choices,
   };
@@ -60,13 +52,6 @@ export default async function homeMenu(
   const answers = await prompt.run();
 
   switch (answers) {
-    case 'deploy':
-      deploymentMenu(services);
-      return;
-    case 'config':
-      configMenu(services);
-      break;
-      return
     case 'quit':
       return;
     default:

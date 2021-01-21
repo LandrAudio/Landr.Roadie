@@ -10,9 +10,9 @@ async function startWork(services: InitializedApisType): Promise<void> {
 
 async function init(): Promise<void> {
   clear();
-  const initializedServices = await initializeApis().then((x) => x);
+  const initializedApis = await initializeApis().then((x) => x);
 
-  await startWork(initializedServices);
+  await startWork(initializedApis);
   console.log('Exiting...');
 }
 
