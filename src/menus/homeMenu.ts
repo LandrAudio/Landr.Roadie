@@ -1,6 +1,6 @@
 import {InitializedApisType} from 'types';
 import configMenu from './configMenu';
-import deploymentMenu from './deploymentMenu';
+import projectsMenu from './projectsMenu';
 // Enquirer doesn't support import syntax
 // eslint-disable-next-line
 const {Select} = require('enquirer');
@@ -61,7 +61,7 @@ export default async function homeMenu(
 
   switch (answers) {
     case 'deploy':
-      deploymentMenu(services);
+      projectsMenu(services);
       return;
     case 'config':
       configMenu(services);

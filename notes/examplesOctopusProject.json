@@ -1,0 +1,77 @@
+{
+  "Id": "Projects-1",
+  "VariableSetId": "variableset-Projects-1",
+  "DeploymentProcessId": "deploymentprocess-Projects-1",
+  "ClonedFromProjectId": null,
+  "DiscreteChannelRelease": false,
+  "IncludedLibraryVariableSetIds": [],
+  "DefaultToSkipIfAlreadyInstalled": false,
+  "TenantedDeploymentMode": "TenantedOrUntenanted",
+  "DefaultGuidedFailureMode": "EnvironmentDefault",
+  "VersioningStrategy": {
+    "Template": null,
+    "DonorPackage": {
+      "DeploymentAction": "Get NuGet package",
+      "PackageReference": ""
+    },
+    "DonorPackageStepId": "85aa8ad0-68ef-4cf9-8147-f6d0c2a98e21"
+  },
+  "ReleaseCreationStrategy": {
+    "ChannelId": null,
+    "ReleaseCreationPackage": null,
+    "ReleaseCreationPackageStepId": null
+  },
+  "Templates": [
+    {
+      "Id": "025862ba-138c-4b4f-9f32-f91e9c2acc39",
+      "Name": "MG_URLS_GUEST",
+      "Label": "MG_URLS_GUEST",
+      "HelpText": "MG_URLS_GUEST",
+      "DefaultValue": "",
+      "DisplaySettings": [{}]
+    },
+    {
+      "Id": "1bc34043-14ab-431a-b438-7c46f3e3b4fe",
+      "Name": "MG_URLS_SITE",
+      "Label": "MG_URLS_SITE",
+      "HelpText": "MG_URLS_SITE",
+      "DefaultValue": "",
+      "DisplaySettings": [{}]
+    }
+  ],
+  "AutoDeployReleaseOverrides": [],
+  "ReleaseNotesTemplate": null,
+  "DeploymentChangesTemplate": null,
+  "SpaceId": "Spaces-1",
+  "ExtensionSettings": [],
+  "Name": "Worker",
+  "Slug": "worker",
+  "Description": "",
+  "IsDisabled": false,
+  "ProjectGroupId": "ProjectGroups-20",
+  "LifecycleId": "Lifecycles-141",
+  "AutoCreateRelease": false,
+  "ProjectConnectivityPolicy": {
+    "SkipMachineBehavior": "None",
+    "TargetRoles": [],
+    "AllowDeploymentsToNoTargets": false,
+    "ExcludeUnhealthyTargets": false
+  },
+  "Links": {
+    "Self": "/api/Spaces-1/projects/Projects-1",
+    "Releases": "/api/Spaces-1/projects/Projects-1/releases{/version}{?skip,take,searchByVersion}",
+    "Channels": "/api/Spaces-1/projects/Projects-1/channels{?skip,take,partialName}",
+    "Triggers": "/api/Spaces-1/projects/Projects-1/triggers{?skip,take,partialName,triggerActionType,triggerActionCategory,runbooks}",
+    "ScheduledTriggers": "/api/Spaces-1/projects/Projects-1/scheduledtriggers{?skip,take,partialName}",
+    "OrderChannels": "/api/Spaces-1/projects/Projects-1/channels/order",
+    "Variables": "/api/Spaces-1/variables/variableset-Projects-1",
+    "Progression": "/api/Spaces-1/progression/Projects-1{?aggregate}",
+    "RunbookTaskRunDashboardItemsTemplate": "/api/Spaces-1/progression/runbooks/taskRuns{?skip,take,ids,projectIds,runbookIds,environmentIds,tenantIds,taskIds}",
+    "DeploymentProcess": "/api/Spaces-1/deploymentprocesses/deploymentprocess-Projects-1",
+    "Web": "/app#/Spaces-1/projects/Projects-1",
+    "Logo": "/api/Spaces-1/projects/Projects-1/logo?cb=Projects-1-2020081806112896",
+    "Metadata": "/api/Spaces-1/projects/Projects-1/metadata",
+    "Runbooks": "/api/Spaces-1/projects/Projects-1/runbooks{?skip,take}",
+    "RunbookSnapshots": "/api/Spaces-1/projects/Projects-1/runbookSnapshots{/name}{?skip,take,searchByName}"
+  }
+}
