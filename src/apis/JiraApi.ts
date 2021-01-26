@@ -1,7 +1,8 @@
-import {API, CredentialsType} from 'types';
+import { CredentialsType} from 'types';
+import API from './Api';
 
 export default class JiraAPI extends API {
-  static baseUrl = 'https://mixgenius.atlassian.net';
+  baseUrl = 'https://mixgenius.atlassian.net';
   static keyPage = 'https://id.atlassian.com/manage/api-tokens';
 
   testCredentials(): Promise<unknown> {

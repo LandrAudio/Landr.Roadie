@@ -5,24 +5,19 @@ import projectsMenu from './projectsMenu';
 // eslint-disable-next-line
 const {Select} = require('enquirer');
 
-export default async function homeMenu(
+export default async function postDemploymentMenu(
   services: InitializedApisType
 ): Promise<void> {
   const choices = [
     {
-      message: '[D]eploy',
+      message: 'Another [D]eployment',
       name: 'deploy',
       shortcut: 'D',
     },
     {
-      message: '[C]onfig',
-      name: 'config',
-      shortcut: 'C',
-    },
-    {
-      message: '[Q]uit',
-      name: 'quit',
-      shortcut: 'Q',
+      message: 'Return [H]ome',
+      name: 'home',
+      shortcut: 'H',
     },
   ];
 
@@ -37,9 +32,8 @@ export default async function homeMenu(
     shortcut: () => undefined,
     actions: {
       shift: {
-        c: 'shortcut',
-        q: 'shortcut',
         d: 'shortcut',
+        h: 'shortcut',
       },
     },
     choices,
@@ -63,10 +57,8 @@ export default async function homeMenu(
   switch (answers) {
     case 'deploy':
       return projectsMenu(services);
-    case 'config':
+    case 'home':
       return configMenu(services);
-    case 'quit':
-      return;
     default:
       break;
   }

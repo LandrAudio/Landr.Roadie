@@ -1,4 +1,5 @@
 import clear from 'clear';
+import kleur from 'kleur';
 import {InitializedApisType} from 'types';
 import releasesMenu from './releasesMenu';
 // Enquirer doesn't support import syntax
@@ -15,12 +16,17 @@ export default async function projectsMenu(
   if (projects) {
     const prompt = new AutoComplete({
       name: 'projects',
-      message: 'Choose project:',
+      message: `Choose project: ${kleur.dim(
+        'Use arrows keys to navigate, or type to filter'
+      )}`,
       choices: projects.map((project) => project.Name),
+      limit: 20,
+      footer: kleur.dim(
+        `(${projects.length} total projects, scroll up and down for more)`
+      ),
     });
 
     const answer = await prompt.run().then((answer) => {
-      console.log('Selected project:', answer);
       return answer;
     });
 

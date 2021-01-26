@@ -16,4 +16,4 @@ async function init(): Promise<void> {
   console.log('Exiting...');
 }
 
-init();
+void init();

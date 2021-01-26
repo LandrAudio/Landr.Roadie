@@ -1,5 +1,6 @@
 import {AxiosRequestConfig} from 'axios';
-import {API, CredentialsType} from 'types';
+import { CredentialsType} from 'types';
+import API from './Api';
 
 export type OctopusProjectType = {
   Name: string;
@@ -58,7 +59,7 @@ export type OctopusFullDeploymentType = {
   Changes: [
     {
       Version: string;
-      ReleaseNotes: null;
+      ReleaseNotes: string | null;
       BuildInformation: [];
       WorkItems: [];
       Commits: [];
@@ -66,7 +67,7 @@ export type OctopusFullDeploymentType = {
   ];
   ChangesMarkdown: string;
   EnvironmentId: string;
-  TenantId: null;
+  TenantId: string | null;
   ForcePackageDownload: boolean;
   ForcePackageRedeployment: boolean;
   SkipActions: [];
@@ -76,10 +77,10 @@ export type OctopusFullDeploymentType = {
   TaskId: string;
   ProjectId: string;
   UseGuidedFailure: boolean;
-  Comments: null;
+  Comments: string | null;
   FormValues: unknown;
-  QueueTime: null;
-  QueueTimeExpiry: null;
+  QueueTime: string | null;
+  QueueTimeExpiry: string | null;
   Name: string;
   Created: string;
   SpaceId: string;
@@ -105,6 +106,42 @@ export type OctopusFullDeploymentType = {
     Variables: string;
   };
 };
+
+type OctopusTaskType = {
+  Id: string,
+  SpaceId: string,
+  Name: string,
+  Description: string,
+  Arguments: { DeploymentId: string },
+  State: string,
+  Completed: string,
+  QueueTime: string,
+  QueueTimeExpiry: string | null,
+  StartTime: string,
+  LastUpdatedTime: string,
+  CompletedTime: string | null,
+  ServerNode: string,
+  Duration: string,
+  ErrorMessage: string,
+  HasBeenPickedUpByProcessor: boolean,
+  IsCompleted: boolean,
+  FinishedSuccessfully: boolean,
+  HasPendingInterruptions: boolean,
+  CanRerun: boolean,
+  HasWarningsOrErrors: boolean,
+  Links: {
+    Self: string,
+    Web: string,
+    Raw: string,
+    Rerun: string,
+    Cancel: string,
+    State: string,
+    QueuedBehind: string,
+    Details: string,
+    Artifacts: string,
+    Interruptions:string,
+  }
+}
 
 type OctopusDashboardType = {
   Projects: OctopusProjectType[];
@@ -179,5 +216,31 @@ export default class OctopusAPI extends API {
   getReleaseVersionById(releaseId: string): string | undefined {
     const release = this.releases.find((release) => release.Id === releaseId);
     return release?.Version;
+  }
+
+  async deployRelease(
+    releaseId: string,
+    envId: string
+  ): Promise<OctopusTaskType | undefined> {
+    const release = await this.request<OctopusFullDeploymentType>(
+      `/api/deployments`,
+      'post',
+      {
+        EnvironmentId: envId,
+        ReleaseId: releaseId,
+      }
+    );
+
+    if (!release) {
+      return undefined;
+    }
+
+    return this.fetchTask(release.TaskId);
+  }
+
+  async fetchTask(
+    taskId: string,
+  ): Promise<OctopusTaskType | undefined> {
+    return this.request<OctopusTaskType>(`/api/tasks/${taskId}`);
   }
 }

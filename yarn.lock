@@ -73,6 +73,25 @@
   resolved "https://registry.yarnpkg.com/@types/clear/-/clear-0.1.1.tgz#f5b5217d74f540682dce941f6f6323768ab1bc91"
   integrity sha512-Wu6DxCnSjFiqymbTeyb63VdU1oKYW0qCnmOSBjpMyuvcuvI9keXfS6RbEcKYqUY0dPOLa34qV+XHAdgiRzPBtg==
 
+"@types/cli-color@*":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@types/cli-color/-/cli-color-2.0.0.tgz#dc64e32da0fb9ea1814300fb468a58e833ce71a6"
+  integrity sha512-E2Oisr73FjwxMHkYU6RcN9P9mmrbG4TNQMIebWhazYxOgWRzA7s4hM+DtAs6ZwiwKFbPst42v1XUAC1APIhRJA==
+
+"@types/cli-cursor@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@types/cli-cursor/-/cli-cursor-3.0.1.tgz#3b7e3a8acd65865ecf2e1a9318c95ad8345c726a"
+  integrity sha512-XhmD4j6Bl2OPdN3RolHLMzJ3oEUyL6yfI41W2LUMq9ywMuWY8KEV3w4PGadY61Y4/QqjWssdaPCALkEnRzjqXA==
+  dependencies:
+    cli-cursor "*"
+
+"@types/clui@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@types/clui/-/clui-0.3.0.tgz#a7512770d50c06b403e018c46f850a0064e53c74"
+  integrity sha512-4GM6iuKwOs4Lq2qUWbxw8LMiamh6YXEuPq4uKeYd7SfFWNK1sNsw41M9GjIhwbIRBOaVgxkutZLLdfZwSNDwtg==
+  dependencies:
+    "@types/cli-color" "*"
+
 "@types/connect@*":
   version "3.4.34"
   resolved "https://registry.yarnpkg.com/@types/connect/-/connect-3.4.34.tgz#170a40223a6d666006d93ca128af2beb1d9b1901"
@@ -121,6 +140,13 @@
   version "1.3.2"
   resolved "https://registry.yarnpkg.com/@types/mime/-/mime-1.3.2.tgz#93e25bf9ee75fe0fd80b594bc4feb0e862111b5a"
   integrity sha512-YATxVxgRqNH6nHEIsvg6k2Boc1JHI9ZbH5iWFFv/MTkchz3b1ieGDa5T0a9RznNdI0KhVbdbWSN+KWWrQZRxTw==
+
+"@types/node-notifier@^8.0.0":
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/@types/node-notifier/-/node-notifier-8.0.0.tgz#51100d67155ed1500a8aaa633987109f59a0637d"
+  integrity sha512-CseIDQOC/I+yvj/4ItpG4ATcwooQlGPDDJweII8nspjjZg4ZBuvkyHg9P81QkElgU9FpYlb5A27BRggD3idTCQ==
+  dependencies:
+    "@types/node" "*"
 
 "@types/node@*", "@types/node@^14.14.22":
   version "14.14.22"
@@ -444,7 +470,7 @@ cli-color@0.3.2:
     memoizee "0.3.x"
     timers-ext "0.1.x"
 
-cli-cursor@^3.1.0:
+cli-cursor@*, cli-cursor@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/cli-cursor/-/cli-cursor-3.1.0.tgz#264305a7ae490d1d03bf0c9ba7c925d1753af307"
   integrity sha512-I/zHAwsKf9FqGoXM4WWRACob9+SNukZTd94DWF57E4toouRulbCxcUh6RKUEOQlYTHJnzkPMySvPNaaSLNfLZw==
@@ -1004,6 +1030,11 @@ globby@^11.0.1:
     merge2 "^1.3.0"
     slash "^3.0.0"
 
+growly@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/growly/-/growly-1.3.0.tgz#f10748cbe76af964b7c96c93c6bcc28af120c081"
+  integrity sha1-8QdIy+dq+WS3yWyTxrzCivEgwIE=
+
 has-flag@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/has-flag/-/has-flag-3.0.0.tgz#b5d454dc2199ae225699f3467e5a07f3b955bafd"
@@ -1091,6 +1122,11 @@ inquirer@^7.3.3:
     strip-ansi "^6.0.0"
     through "^2.3.6"
 
+is-docker@^2.0.0:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/is-docker/-/is-docker-2.1.1.tgz#4125a88e44e450d384e09047ede71adc2d144156"
+  integrity sha512-ZOoqiXfEwtGknTiuDEy8pN2CfE3TxMHprvNer1mXiqwkOT77Rw3YVrUQ52EqAOU3QAWDQ+bQdx7HJzrv7LS2Hw==
+
 is-extglob@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/is-extglob/-/is-extglob-2.1.1.tgz#a88c02535791f02ed37c76a1b9ea9773c833f8c2"
@@ -1131,6 +1167,13 @@ is-plain-object@^2.0.4:
   integrity sha512-h5PpgXkWitc38BBMYawTYMWJHFZJVnBquFE57xFpjB8pJFiF6gZ+bU+WyI/yqXiFR5mdLsgYNaPe8uao6Uv9Og==
   dependencies:
     isobject "^3.0.1"
+
+is-wsl@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/is-wsl/-/is-wsl-2.2.0.tgz#74a4c76e77ca9fd3f932f290c17ea326cd157271"
+  integrity sha512-fKzAra0rGJUUBwGBgNkHZuToZcn+TtXHpeCgmkMJMMYx1sQDYaCSyjJBSCa2nH1DGm7s3n1oBnohoVTBaN7Lww==
+  dependencies:
+    is-docker "^2.0.0"
 
 isarray@~1.0.0:
   version "1.0.0"
@@ -1336,6 +1379,18 @@ node-cleanup@^2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/node-cleanup/-/node-cleanup-2.1.2.tgz#7ac19abd297e09a7f72a71545d951b517e4dde2c"
   integrity sha1-esGavSl+Caf3KnFUXZUbUX5N3iw=
+
+node-notifier@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/node-notifier/-/node-notifier-9.0.0.tgz#46c5bbecbb796d4a803f646cea5bc91403f2ff38"
+  integrity sha512-SkwNwGnMMlSPrcoeH4CSo9XyWe72acAHEJGDdPdB+CyBVHsIYaTQ4U/1wk3URsyzC75xZLg2vzU2YaALlqDF1Q==
+  dependencies:
+    growly "^1.3.0"
+    is-wsl "^2.2.0"
+    semver "^7.3.2"
+    shellwords "^0.1.1"
+    uuid "^8.3.0"
+    which "^2.0.2"
 
 noop-logger@^0.1.1:
   version "0.1.1"
@@ -1617,6 +1672,11 @@ shebang-regex@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/shebang-regex/-/shebang-regex-3.0.0.tgz#ae16f1644d873ecad843b0307b143362d4c42172"
   integrity sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==
+
+shellwords@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/shellwords/-/shellwords-0.1.1.tgz#d6b9181c1a48d397324c84871efbcfc73fc0654b"
+  integrity sha512-vFwSUfQvqybiICwZY5+DAWIPLKsWO31Q91JSKl3UYv+K5c2QRPzn0qzec6QPu1Qc9eHYItiP3NdJqNVqetYAww==
 
 signal-exit@^3.0.0, signal-exit@^3.0.2:
   version "3.0.3"
@@ -1942,6 +2002,11 @@ util-deprecate@^1.0.1, util-deprecate@~1.0.1:
   resolved "https://registry.yarnpkg.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
   integrity sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=
 
+uuid@^8.3.0:
+  version "8.3.2"
+  resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
+  integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
+
 v8-compile-cache@^2.0.3:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/v8-compile-cache/-/v8-compile-cache-2.2.0.tgz#9471efa3ef9128d2f7c6a7ca39c4dd6b5055b132"
@@ -1952,7 +2017,7 @@ which-pm-runs@^1.0.0:
   resolved "https://registry.yarnpkg.com/which-pm-runs/-/which-pm-runs-1.0.0.tgz#670b3afbc552e0b55df6b7780ca74615f23ad1cb"
   integrity sha1-Zws6+8VS4LVd9rd4DKdGFfI60cs=
 
-which@^2.0.1:
+which@^2.0.1, which@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/which/-/which-2.0.2.tgz#7c6a8dd0a636a0327e10b59c9286eee93f3f51b1"
   integrity sha512-BLI3Tl1TW3Pvl70l3yq3Y64i+awpwXqsGBYWkkqMtnbXgrMD+yj7rhW0kuEDxzJaYXGjEW5ogapKNMEKNMjibA==

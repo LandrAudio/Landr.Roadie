@@ -49,11 +49,9 @@ export default async function configMenu(
 
   switch (answers) {
     case 'credentials':
-      await updateCredentialsMenu(services);
-      break;
+      return updateCredentialsMenu(services);
     case 'back':
-      await homeMenu(services);
-      return;
+      return homeMenu(services);
     default:
       break;
   }
