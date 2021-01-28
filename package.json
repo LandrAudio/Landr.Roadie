@@ -1,7 +1,8 @@
 {
   "name": "roadie",
   "version": "0.0.0",
-  "description": "LANDR Audio Development Workflow Helper",
+  "description": "LANDR Deployments Interactive CLI",
+  "engines" : { "node" : ">=14.15.*" },
   "main": "dist/index.ts",
   "author": "hjack",
   "license": "MIT",
